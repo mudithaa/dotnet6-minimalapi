@@ -1,7 +1,15 @@
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.UseSwagger();
+app.UseSwaggerUI(o => 
+{
+    o.SwaggerEndpoint("/swagger/v1/swagger.json", "Minimal API");
+    o.RoutePrefix = string.Empty;
+});
 
 app.MapGet("/customers", () => {
     return new[]
